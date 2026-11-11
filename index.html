@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tesorería Municipal de Isla — Prototipo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Literata:opsz,wght@7..72,500;7..72,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --stone: #1c1c1e;
+  --stone-soft: #2c2c2e;
+  --offwhite: #f7f5f2;
+  --charcoal: #3a3a3c;
+  --terracotta: #c45c3e;
+  --terracotta-hover: #a84a30;
+  --muted: #8e8e93;
+  --line: #e5e5ea;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--offwhite); color: var(--charcoal); line-height: 1.5; }
+.header { background: var(--stone); color: white; padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.logo { display: flex; align-items: center; gap: 12px; font-family: 'Literata', serif; font-weight: 600; font-size: 18px; }
+.logo-mark { width: 32px; height: 32px; border: 2px solid var(--terracotta); border-radius: 6px; display: grid; place-items: center; font-size: 16px; }
+.nav { display: flex; gap: 28px; }
+.nav a { color: white; text-decoration: none; font-size: 15px; opacity: 0.85; }
+.nav a:hover { opacity: 1; }
+.btn-pay { background: var(--terracotta); color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; }
+.btn-pay:hover { background: var(--terracotta-hover); }
+.hero { padding: 80px 32px 60px; max-width: 1100px; margin: 0 auto; }
+.hero h1 { font-family: 'Literata', serif; font-size: 48px; font-weight: 600; line-height: 1.15; color: var(--stone); margin-bottom: 16px; }
+.hero p { font-size: 20px; color: var(--charcoal); max-width: 540px; margin-bottom: 28px; }
+.aviso-bar { background: var(--terracotta); color: white; padding: 10px 32px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
+.aviso-bar a { color: white; font-weight: 500; }
+.services { padding: 40px 32px; max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; }
+.service-card { background: white; border: 1px solid var(--line); border-radius: 12px; padding: 28px 16px; text-align: center; text-decoration: none; color: inherit; transition: transform 0.15s; }
+.service-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+.service-icon { width: 48px; height: 48px; margin: 0 auto 12px; border: 2px solid var(--terracotta); border-radius: 50%; display: grid; place-items: center; color: var(--terracotta); font-size: 20px; }
+.service-card h3 { font-size: 15px; font-weight: 600; }
+.historia { padding: 60px 32px; max-width: 800px; margin: 0 auto; text-align: center; }
+.historia h2 { font-family: 'Literata', serif; font-size: 32px; margin-bottom: 16px; color: var(--stone); }
+.historia p { font-size: 17px; color: var(--charcoal); }
+.tramites { padding: 40px 32px 80px; max-width: 1100px; margin: 0 auto; }
+.tramites h2 { font-family: 'Literata', serif; font-size: 28px; margin-bottom: 24px; }
+.tramite-card { background: white; border: 1px solid var(--line); border-radius: 10px; padding: 20px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+.tramite-card h3 { font-size: 16px; margin-bottom: 4px; }
+.tags { display: flex; gap: 8px; font-size: 12px; }
+.tag { background: #f0f0f0; padding: 4px 8px; border-radius: 4px; color: var(--muted); }
+.tag.online { background: #e8f5e9; color: #2e7d32; }
+.footer { background: var(--stone); color: #aaa; padding: 32px; text-align: center; font-size: 13px; }
+.screen { display: none; }
+.screen.active { display: block; }
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid var(--line); display: flex; justify-content: space-around; padding: 12px 0; }
+.bottom-nav button { background: none; border: none; font-size: 13px; color: var(--muted); cursor: pointer; padding: 8px 16px; }
+.bottom-nav button.active { color: var(--terracotta); font-weight: 600; }
+@media (max-width: 700px) {
+  .hero h1 { font-size: 34px; }
+  .nav { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo"><div class="logo-mark">🍍</div> Tesorería Isla</div>
+  <nav class="nav">
+    <a href="#" onclick="show('home')">Inicio</a>
+    <a href="#" onclick="show('tramites')">Trámites</a>
+    <a href="#" onclick="show('avisos')">Avisos</a>
+    <a href="#" onclick="show('historia')">Historia</a>
+  </nav>
+  <a href="#" class="btn-pay">Pagar en línea</a>
+</div>
+
+<div class="aviso-bar">
+  <span><strong>AGUA:</strong> Suspensión temporal en Av. Dos de Abril, col. Centro, por fuga en la red. Restablecimiento estimado hoy a las 16:00 h.</span>
+  <a href="#" onclick="show('avisos')">Ver todos</a>
+</div>
+
+<section id="home" class="screen active">
+  <div class="hero">
+    <h1>Resuelve en línea, cuando quieras y desde donde estés.</h1>
+    <p>Tus pagos y trámites municipales, claros y disponibles las 24 horas.</p>
+    <a href="#" class="btn-pay" style="display:inline-block;">Ir a pagos</a>
+  </div>
+  <div class="services">
+    <a href="#" class="service-card" onclick="show('tramites')"><div class="service-icon">🏠</div><h3>Predial</h3></a>
+    <a href="#" class="service-card" onclick="show('tramites')"><div class="service-icon">🧹</div><h3>Limpia</h3></a>
+    <a href="#" class="service-card" onclick="show('tramites')"><div class="service-icon">📐</div><h3>Desarrollo Urbano</h3></a>
+    <a href="#" class="service-card" onclick="show('tramites')"><div class="service-icon">🗺️</div><h3>Catastro</h3></a>
+    <a href="#" class="service-card" onclick="show('tramites')"><div class="service-icon">📜</div><h3>Registro Civil</h3></a>
+    <a href="#" class="service-card" onclick="show('tramites')"><div class="service-icon">🏪</div><h3>Comercio</h3></a>
+  </div>
+  <div class="historia">
+    <h2>Isla, tierra de piña</h2>
+    <p>Municipio veracruzano con arraigo agrícola y tradición. El Palacio Municipal y el quiosco de la plaza son símbolos de su identidad.</p>
+  </div>
+</section>
+
+<section id="tramites" class="screen">
+  <div class="tramites">
+    <h2>Trámites y pagos</h2>
+    <div class="tramite-card">
+      <div>
+        <h3>Pago de Predial</h3>
+        <div class="tags"><span class="tag online">En línea</span><span class="tag online">Se paga en línea</span><span class="tag">Descarga recibo</span></div>
+      </div>
+      <a href="#" class="btn-pay">Pagar</a>
+    </div>
+    <div class="tramite-card">
+      <div>
+        <h3>Limpia Pública</h3>
+        <div class="tags"><span class="tag online">En línea</span><span class="tag online">Se paga en línea</span></div>
+      </div>
+      <a href="#" class="btn-pay">Pagar</a>
+    </div>
+    <div class="tramite-card">
+      <div>
+        <h3>Licencia de Construcción</h3>
+        <div class="tags"><span class="tag">Presencial</span><span class="tag">Carga documentos</span></div>
+      </div>
+      <a href="#" style="color:var(--terracotta);font-weight:600;">Ver detalles</a>
+    </div>
+  </div>
+</section>
+
+<section id="avisos" class="screen">
+  <div class="tramites">
+    <h2>Avisos municipales</h2>
+    <div class="tramite-card">
+      <div>
+        <h3>Suspensión de agua — Av. Dos de Abril</h3>
+        <p style="font-size:14px;color:var(--muted);margin-top:4px;">Fuga en red de distribución. Restablecimiento estimado hoy a las 16:00 h. Reportes: 283 874 0077</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="historia" class="screen">
+  <div class="historia">
+    <h2>Historia de Isla</h2>
+    <p>Isla es un municipio del estado de Veracruz conocido por su producción de piña. Su Palacio Municipal, ubicado en Avenida Dos de Abril, y el quiosco de la plaza rodeado de framboyanes son referentes de la vida comunitaria.</p>
+  </div>
+</section>
+
+<footer class="footer">
+  Tesorería Municipal de Isla, Veracruz · tesoreria.isla.gov.mx<br>
+  Prototipo para revisión · Noviembre 2026
+</footer>
+
+<div class="bottom-nav">
+  <button onclick="show('home')" class="active">Inicio</button>
+  <button onclick="show('tramites')">Trámites</button>
+  <button onclick="show('avisos')">Avisos</button>
+  <button onclick="show('historia')">Historia</button>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.bottom-nav button').forEach(b => b.classList.remove('active'));
+  if (event && event.target) event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
